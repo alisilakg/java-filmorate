@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class UserController {
         return new ArrayList<>(users.values());
     }
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         log.info("POST request received: {}", user);
         if(user.getEmail() == null || user.getEmail().isBlank()) {
             log.error("User email empty");
@@ -58,7 +59,7 @@ public class UserController {
         return user;
     }
     @PutMapping
-    public User put(@RequestBody User user){
+    public User put(@Valid @RequestBody User user){
         log.info("PUT request received: {}", user);
         if(!users.containsKey(user.getId())) {
             log.error("User's id is not exist");

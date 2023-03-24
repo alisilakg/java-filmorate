@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -24,7 +25,7 @@ public class FilmController {
         return new ArrayList<>(films.values());
     }
     @PostMapping
-    public Film create(@RequestBody Film film) {
+    public Film create(@Valid @RequestBody Film film) {
         log.info("POST request received: {}", film);
         if(film.getName() == null || film.getName().isBlank() || film.getName().isEmpty()) {
             log.error("Film name empty");
@@ -47,7 +48,7 @@ public class FilmController {
         return film;
     }
     @PutMapping
-    public Film put(@RequestBody Film film) {
+    public Film put(@Valid @RequestBody Film film) {
         log.info("PUT request received: {}", film);
         if(!films.containsKey(film.getId())) {
             log.error("Film's id is not exist");
