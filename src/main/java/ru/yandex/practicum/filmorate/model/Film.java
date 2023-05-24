@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
 @Data
 public class Film {
     private long id;
@@ -31,19 +32,29 @@ public class Film {
     private int duration;
     private Set<Genre> genres = new HashSet<>();
     private Mpa mpa;
+    private Set<Director> directors = new HashSet<>();
     @JsonIgnore
     private Set<Long> likes = new HashSet<>();
 
     public Film() {
     }
 
-    public Film(String name, String description, LocalDate releaseDate, int duration, Set<Genre> genres, Mpa mpa) {
+    public Film(String name, String description, LocalDate releaseDate, int duration) {
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+
+    }
+
+    public Film(String name, String description, LocalDate releaseDate, int duration, Set<Genre> genres, Mpa mpa, Set<Director> directors) {
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;
         this.duration = duration;
         this.genres = genres;
         this.mpa = mpa;
+        this.directors = directors;
     }
 
     @Override
@@ -58,4 +69,5 @@ public class Film {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
