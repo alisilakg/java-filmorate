@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
+import ru.yandex.practicum.filmorate.model.Event;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
@@ -110,6 +111,11 @@ public class UserController {
     @DeleteMapping("/users/{id}/friends/{friendId}")
     public void deleteFriend(@PathVariable("id") Long userId, @PathVariable("friendId") Long friendId) {
         userService.deleteFriend(userId, friendId);
+    }
+
+    @GetMapping("/users/{id}/feed")
+    public List<Event> getEventsByIdUser(@PathVariable("id") Long userId){
+        return userService.getEventsByIdUser(userId);
     }
 
 }

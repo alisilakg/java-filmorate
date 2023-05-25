@@ -12,6 +12,13 @@ create table IF NOT EXISTS LIST_OF_MPAS
     constraint LIST_OF_MPAS_PK
         primary key (MPA_ID)
 );
+create table IF NOT EXISTS LIST_OF_DIRECTORS
+(
+    DIRECTOR_ID   INTEGER auto_increment,
+    DIRECTOR_NAME CHARACTER VARYING not null,
+    constraint LIST_OF_DIRECTORS_PK
+        primary key (DIRECTOR_ID)
+);
 create table IF NOT EXISTS FILMS
 (
     FILM_ID      INTEGER auto_increment,
@@ -19,7 +26,7 @@ create table IF NOT EXISTS FILMS
     DESCRIPTION  CHARACTER VARYING(200) not null,
     RELEASE_DATE DATE                   not null,
     DURATION     INTEGER                not null,
-    MPA_ID          INTEGER,
+    MPA_ID       INTEGER,
     constraint FILMS_PK
         primary key (FILM_ID),
     constraint FILMS_LIST_OF_MPAS_MPA_ID_FK
@@ -36,6 +43,18 @@ create table IF NOT EXISTS GENRES
     constraint GENRES_LIST_OF_GENRES_GENRE_ID_FK
         foreign key (GENRE_ID) references LIST_OF_GENRES
 );
+create table IF NOT EXISTS DIRECTORS
+(
+    DIRECTOR_ID INTEGER not null,
+    FILM_ID     INTEGER not null,
+    constraint DIRECTORS_PK
+        primary key (DIRECTOR_ID, FILM_ID, DIRECTOR_ID),
+    constraint DIRECTORS_FILMS_FILM_ID_FK
+        foreign key (FILM_ID) references FILMS,
+    constraint DIRECTORS_LIST_OF_DIRECTORS_DIRECTOR_ID_FK
+        foreign key (DIRECTOR_ID) references LIST_OF_DIRECTORS
+);
+
 create table IF NOT EXISTS USERS
 (
     USER_ID      INTEGER auto_increment,
@@ -68,4 +87,38 @@ create table IF NOT EXISTS FRIENDSHIP
         foreign key (USER1_ID) references USERS,
     constraint FRIENDSHIP_USERS_USER2_ID_FK_2
         foreign key (USER2_ID) references USERS
+);
+
+create table IF NOT EXISTS EVENT_TYPE
+(
+    TYPE_ID    INTEGER                not null,
+    TYPE_NAME  CHARACTER VARYING      not null,
+    constraint EVENT_TYPE_PK
+        primary key (TYPE_ID)
+);
+
+create table IF NOT EXISTS OPERATION
+(
+    OPERATION_ID    INTEGER                not null,
+    OPERATION_NAME  CHARACTER VARYING      not null,
+    constraint OPERATION_PK
+        primary key (OPERATION_ID)
+);
+
+create table IF NOT EXISTS EVENTS
+(
+    EVENT_ID       INTEGER       auto_increment,
+    TIME_EVENT     TIMESTAMP     not null,
+    USER_ID        INTEGER       not null,
+    TYPE_ID        INTEGER       not null,
+    OPERATION_ID   INTEGER       not null,
+    ENTITY_ID      INTEGER       not null,
+    constraint EVENT_PK
+        primary key (EVENT_ID,USER_ID,TYPE_ID,OPERATION_ID,EVENT_ID),
+    constraint USER_ID_FK
+        foreign key (USER_ID) references USERS,
+    constraint TYPE_ID_FK_2
+        foreign key (TYPE_ID) references EVENT_TYPE,
+    constraint OPERATION_ID_FK
+        foreign key (OPERATION_ID) references OPERATION
 );

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface UserStorage {
     List<User> findAllFriends(long userId);
 
     List<User> findCommonFriends(long userId, long otherUserId);
+
+    boolean contains(long id);
 }
+

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FilmService {
